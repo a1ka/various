@@ -2,7 +2,7 @@ import pandas as pd
 import json
 import re
 from config import SNOWFLAKE_PWD, SNOWFLAKE_USER, SECRET_API_TOKEN, SECRET_PROD_URL
-from caching_tool.taxonomy import CallError, validate_models
+from taxonomy import CallError, validate_models
 
 headers = {'content-type': 'application/json', 'x-auth-token': SECRET_API_TOKEN}
 
@@ -93,7 +93,7 @@ def aggregate():
     new_models = platform_requests.loc[~platform_requests['combined_col'].isin(ss_data['combined_col'])]
     new_models = new_models[['data_source', 'fields']]
 
-    # validate against husky model
+    # validate against existing production model
     # for index, row in new_models.iterrows():
     for row in new_models.itertuples(index=True, name='Pandas'):
         try:
